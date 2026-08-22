@@ -40,11 +40,6 @@ pipeline {
         disableConcurrentBuilds()       // 禁止并发构建（避免资源竞争）
     }
 
-    // 工具配置（可选，需 Jenkins 预装对应工具）
-    tools {
-        // 如已配置 Python 工具，可取消注释
-        // python 'Python3'
-    }
 
     stages {
 
