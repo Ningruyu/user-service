@@ -1,0 +1,45 @@
+# 版本控制
+.git
+.gitignore
+
+# Python 缓存和虚拟环境
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+
+# 测试和覆盖率报告
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+results.xml
+*.cover
+
+# 构建产物
+build/
+dist/
+*.egg-info/
+*.egg
+
+# IDE / 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 文档和 CI 配置（不需要进入镜像）
+README.md
+Jenkinsfile
+.flake8
+.dockerignore
+
+# 数据库文件和日志（运行时生成）
+*.db
+*.db-journal
+*.log

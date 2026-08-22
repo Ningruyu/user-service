@@ -1,0 +1,28 @@
+[flake8]
+# 行长度放宽到 120（FastAPI 路由装饰器较长）
+max-line-length = 120
+
+# 忽略的规则：
+# E203: 与 PEP8 推荐冲突（切片前的空格），Black 兼容
+# E501: 行过长（已用 max-line-length 控制，此处再忽略避免误报）
+# W503: 二元运算符前换行（与 PEP8 推荐 W504 冲突）
+# E704: 函数定义后只有 pass（占位用）
+extend-ignore = E203, W503
+
+# 排除的目录
+exclude =
+    .git,
+    __pycache__,
+    .pytest_cache,
+    .venv,
+    venv,
+    env,
+    build,
+    dist,
+    *.egg-info
+
+# 需要检查的文件扩展名
+filename = *.py
+
+# 最大复杂度（可选）
+max-complexity = 10
