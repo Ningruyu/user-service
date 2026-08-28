@@ -25,7 +25,7 @@ pipeline {
         DATABASE_URL      = 'sqlite:///:memory:'
         TESTING           = 'true'
         PYTHON_VERSION    = 'python3'
-        IMAGE_NAME        = 'your-dockerhub-username/user-service'
+        IMAGE_NAME        = 'user-service'
         IMAGE_TAG         = "${env.BUILD_NUMBER}"
         // Docker Hub 凭证 ID（在 Jenkins 全局凭证中配置）
         // 类型：Username with password，ID 为 docker-hub-credentials
