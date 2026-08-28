@@ -179,7 +179,7 @@ pipeline {
                 always {
                     // 发布 Cobertura 覆盖率报告
                     // 需在 Jenkins 安装 Cobertura 插件
-                    cobertura coberturaReportFile: 'coverage.xml'
+                    recordCoverage(tools: [[parser: 'COBERTURA', pattern: 'coverage.xml']])
 
                     // 归档 HTML 覆盖率报告
                     publishHTML(target: [
