@@ -234,24 +234,23 @@ pipeline {
                 }
             }
             steps {
-                // 使用 withCredentials 安全使用凭证，避免明文泄露
-                withCredentials([usernamePassword(
-                    credentialsId: "${DOCKER_HUB_CREDS}",
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
-                    sh '''
-                        # 登录 Docker Hub
-                        echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
-
-                        # 推送镜像（构建号标签和 latest 标签）
-                        docker push ${IMAGE_NAME}:${IMAGE_TAG}
-                        docker push ${IMAGE_NAME}:latest
-
-                        # 退出登录，清理凭证
-                        docker logout
-                        echo "镜像推送完成"
-                    '''
+                script {
+                    try {
+                        withCredentials([usernamePassword(
+                            credentialsId: "${DOCKER_HUB_CREDS}",
+                            usernameVariable: 'DOCKER_USER',
+                            passwordVariable: 'DOCKER_PASS'
+                        )]) {
+                            sh '''
+                                echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+                                docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                                docker push ${IMAGE_NAME}:latest
+                                docker logout
+                            '''
+                        }
+                    } catch (e) {
+                        echo '未配置 docker-hub-credentials 凭证，跳过推送（以后想练：Manage Jenkins → Credentials → 添加后重跑即可）'
+                    }
                 }
             }
         }
@@ -291,7 +290,7 @@ pipeline {
                     for i in $(seq 1 30); do
                         if curl -s http://localhost:8000/health | grep -q "healthy"; then
                             echo "应用已启动！"
-                            curl -s http://localhost:8000/ | python -m json.tool
+                            curl -s http://localhost:8000/ | python3 -m json.tool
                             break
                         fi
                         sleep 1
