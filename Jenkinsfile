@@ -203,10 +203,11 @@ pipeline {
         // ============================================
         stage('Build Docker Image') {
             when {
-                // 仅在主干分支（main 或 master）执行
-                anyOf {
-                    branch 'main'
-                    branch 'master'
+                // 兼容普通 Pipeline 和多分支 Pipeline
+                // 普通 Pipeline：BRANCH_NAME 为 null，默认执行部署
+                // 多分支 Pipeline：仅 main/master 分支执行部署
+                expression {
+                    return env.BRANCH_NAME == null || env.BRANCH_NAME in ['main', 'master']
                 }
             }
             steps {
